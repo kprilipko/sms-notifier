@@ -1,38 +1,26 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.sms-form {
+    text-align: left;
+    padding: 1em;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .sms-form label {
+    display: block;
   }
-  to {
-    transform: rotate(360deg);
+  .sms-form input,
+  .sms-form textarea {
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
   }
-}
+  .sms-form div {
+    margin-bottom: 0.5em;
+  }
+  .sms-form button {
+    font-size: 1em;
+    width: 100%;
+  }
+  .sms-form.error {
+    outline: 2px solid #f00;
+  }
+  
