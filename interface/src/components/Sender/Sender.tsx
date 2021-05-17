@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import {
   FormControl,
@@ -7,6 +7,8 @@ import {
   Button,
   FormHelperText,
 } from "@material-ui/core";
+
+import { RouteComponentProps } from "@reach/router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Sender = () => {
+export const Sender: FC<RouteComponentProps> = () => {
   const classes = useStyles();
   const [state, setState] = useState({
     message: {
@@ -100,32 +102,5 @@ export const Sender = () => {
       </Button>
       <FormHelperText error>{state.error}</FormHelperText>
     </form>
-    //   <form
-    //   onSubmit={onSubmit}
-    //   className={state.error ? 'error sms-form' : 'sms-form'}
-    // >
-    //   <div>
-    //     <label htmlFor="to">To:</label>
-    //     <input
-    //       type="tel"
-    //       name="to"
-    //       id="to"
-    //       value={state.message.to}
-    //       onChange={onHandleChange}
-    //     />
-    //   </div>
-    //   <div>
-    //     <label htmlFor="body">Body:</label>
-    //     <textarea
-    //       name="body"
-    //       id="body"
-    //       value={state.message.body}
-    //       onChange={onHandleChange}
-    //     />
-    //   </div>
-    //   <button type="submit" disabled={state.submitting}>
-    //     Send message
-    //   </button>
-    // </form>
   );
 };

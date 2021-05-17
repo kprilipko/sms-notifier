@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, FC } from "react";
 
-import { Link, RouteComponentProps } from "@reach/router";
-import { FC } from "react";
+import { RouteComponentProps } from "@reach/router";
 
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const SignIn: FC<RouteComponentProps> = () => {
+export const SignUp: FC<RouteComponentProps> = () => {
   const classes = useStyles();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -46,22 +45,6 @@ export const SignIn: FC<RouteComponentProps> = () => {
         setErrors((prevState) => ({ ...prevState, email: error.message }));
       } else setErrors((prevState) => ({ ...prevState, email: "" }));
       if (error.code === "auth/weak-password") {
-        setErrors((prevState) => ({ ...prevState, password: error.message }));
-      } else setErrors((prevState) => ({ ...prevState, password: "" }));
-    }
-  };
-
-  const signIn = async () => {
-    try {
-      await auth.signInWithEmailAndPassword(
-        emailRef.current!.value,
-        passwordRef.current!.value
-      );
-    } catch (error) {
-      if (error.code === "auth/invalid-email") {
-        setErrors((prevState) => ({ ...prevState, email: error.message }));
-      } else setErrors((prevState) => ({ ...prevState, email: "" }));
-      if (error.code === "auth/wrong-password") {
         setErrors((prevState) => ({ ...prevState, password: error.message }));
       } else setErrors((prevState) => ({ ...prevState, password: "" }));
     }
@@ -92,9 +75,6 @@ export const SignIn: FC<RouteComponentProps> = () => {
         disableElevation
         variant="contained"
       >
-        <Button onClick={signIn} color="primary">
-          SignIn
-        </Button>
         <Button onClick={createAccount} color="secondary">
           SignUp
         </Button>

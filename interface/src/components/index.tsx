@@ -1,2 +1,2 @@
 export * from "./Sender";
-export * from "./SignIn";
+export * from "./Auth";
