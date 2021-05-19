@@ -9,6 +9,9 @@ import {
 } from "@material-ui/core";
 
 import { RouteComponentProps } from "@reach/router";
+import PhoneInput from 'react-phone-number-input'
+
+import './style.css';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Sender: FC<RouteComponentProps> = () => {
+export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
   const classes = useStyles();
   const [state, setState] = useState({
     message: {
@@ -68,7 +71,14 @@ export const Sender: FC<RouteComponentProps> = () => {
       });
   };
 
-  const onHandleChange = (event: {
+  const onHandleChangePhone = (value: string) => {
+    setState((prevState) => ({
+      ...prevState,
+      message: { ...state.message, ['to']: value },
+    }));
+  };
+
+  const onHandleChangeCommon = (event: {
     target: { getAttribute: (arg0: string) => any; value: any };
   }) => {
     const name = event.target.getAttribute("name");
@@ -81,20 +91,16 @@ export const Sender: FC<RouteComponentProps> = () => {
   return (
     <form className={classes.root}>
       <FormControl>
-        <InputLabel>Tel</InputLabel>
-        <Input
-          type="tel"
-          name="to"
-          value={state.message.to}
-          onChange={onHandleChange}
-        />
+        <PhoneInput
+      value={state.message.to}
+      onChange={onHandleChangePhone}/>
       </FormControl>
       <FormControl>
         <InputLabel>Msg</InputLabel>
         <Input
           name="body"
           value={state.message.body}
-          onChange={onHandleChange}
+          onChange={onHandleChangeCommon}
         />
       </FormControl>
       <Button variant="contained" onClick={onSubmit} color="primary">

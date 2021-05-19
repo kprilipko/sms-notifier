@@ -1,6 +1,7 @@
 import "./App.css";
 
-import { Routing } from "./Routing";
+import  Router from "./routing/Router";
+import { routes } from "./routing/config";
 import Grid from "@material-ui/core/Grid";
 
 const App = () => {
@@ -14,7 +15,7 @@ const App = () => {
       style={{ minHeight: "100vh" }}
     >
       <Grid item xs={3}>
-        <Routing />
+        <Router routes={routes} />
       </Grid>
     </Grid>
   );
