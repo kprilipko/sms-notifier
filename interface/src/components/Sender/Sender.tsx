@@ -9,9 +9,8 @@ import {
 } from "@material-ui/core";
 
 import { RouteComponentProps } from "@reach/router";
-import PhoneInput from 'react-phone-number-input'
-
-import './style.css';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,7 +73,7 @@ export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
   const onHandleChangePhone = (value: string) => {
     setState((prevState) => ({
       ...prevState,
-      message: { ...state.message, ['to']: value },
+      message: { ...state.message, ["to"]: value },
     }));
   };
 
@@ -91,13 +90,12 @@ export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
   return (
     <form className={classes.root}>
       <FormControl>
-        <PhoneInput
-      value={state.message.to}
-      onChange={onHandleChangePhone}/>
+        <PhoneInput value={state.message.to} onChange={onHandleChangePhone} />
       </FormControl>
       <FormControl>
-        <InputLabel>Msg</InputLabel>
+        <InputLabel htmlFor="SMS">SMS</InputLabel>
         <Input
+          id="SMS"
           name="body"
           value={state.message.body}
           onChange={onHandleChangeCommon}

@@ -1,6 +1,6 @@
 import "./App.css";
 
-import  Router from "./routing/Router";
+import Router from "./routing/Router";
 import { routes } from "./routing/config";
 import Grid from "@material-ui/core/Grid";
 

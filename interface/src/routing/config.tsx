@@ -1,8 +1,13 @@
-import React, { ComponentType, lazy, LazyExoticComponent, ReactNode } from 'react';
+import React, {
+  ComponentType,
+  lazy,
+  LazyExoticComponent,
+  ReactNode,
+} from "react";
 
 export interface IRoute {
   path: string;
-  exact: boolean;  
+  exact: boolean;
   fallback: NonNullable<ReactNode> | null;
   component?: LazyExoticComponent<ComponentType<any>>;
   routes?: IRoute[];
@@ -12,33 +17,36 @@ export interface IRoute {
 
 export const routes: IRoute[] = [
   {
-    path: '/',
+    path: "/signup",
+    component: lazy(() =>
+      import("../components/Auth/SignUp").then((module) => ({
+        default: module.SignUp,
+      }))
+    ),
     exact: true,
     private: false,
-    redirect: '/sender',
     fallback: <div> Loading... </div>,
-    routes: [
-      {
-        path: '/signup',
-        component: lazy(() => import('../components/Auth/SignUp').then(module => ({default: module.SignUp}))),
-        exact: true,
-        private: false,
-        fallback: <div> Loading... </div>
-      },
-      {
-        path: '/signin',
-        component: lazy(() => import('../components/Auth/SignIn').then(module => ({default: module.SignIn}))),
-        exact: true,
-        private: false,
-        fallback: <div> Loading... </div>
-      }
-    ]
   },
   {
-    path: '/sender',
-    component: lazy(() => import('../components/Sender').then(module => ({default: module.Sender}))),
+    path: "/signin",
+    component: lazy(() =>
+      import("../components/Auth/SignIn").then((module) => ({
+        default: module.SignIn,
+      }))
+    ),
+    exact: true,
+    private: false,
+    fallback: <div> Loading... </div>,
+  },
+  {
+    path: "/sender",
+    component: lazy(() =>
+      import("../components/Sender").then((module) => ({
+        default: module.Sender,
+      }))
+    ),
     exact: true,
     private: true,
-    fallback: <div> Loading... </div>
-  }
+    fallback: <div> Loading... </div>,
+  },
 ];
