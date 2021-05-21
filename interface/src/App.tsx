@@ -3,9 +3,12 @@ import "./App.css";
 import Router from "./routing/Router";
 import { routes } from "./routing/config";
 import Grid from "@material-ui/core/Grid";
+import { PrimaryAppBar } from './components'
 
 const App = () => {
   return (
+    <>
+    <PrimaryAppBar />
     <Grid
       container
       spacing={0}
@@ -18,6 +21,7 @@ const App = () => {
         <Router routes={routes} />
       </Grid>
     </Grid>
+    </>
   );
 };
 
