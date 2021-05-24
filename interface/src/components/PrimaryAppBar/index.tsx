@@ -1,1 +1,1 @@
-export * from "./PrimaryAppBar";
+export {default as PrimaryAppBar} from "./PrimaryAppBar";

@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes"
 
-export function addArticle(item: ISMS) {
+export const addSMS= (sms: ISMS) => {
   const action: SMSAction = {
     type: actionTypes.ADD_SMS,
     sms,
@@ -8,7 +8,7 @@ export function addArticle(item: ISMS) {
   return action
 }
 
-export function removeArticle(item: ISMS) {
+export const removeSMS = (sms: ISMS) => {
   const action: SMSAction = {
     type: actionTypes.REMOVE_SMS,
     sms,

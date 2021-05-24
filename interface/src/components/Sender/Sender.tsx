@@ -10,6 +10,10 @@ import {
 
 import { RouteComponentProps } from "@reach/router";
 import PhoneInput from "react-phone-input-2";
+import { connect } from 'react-redux';
+import { addSMS } from '../../state/actionCreators'
+import axios from 'axios';
+
 import "react-phone-input-2/lib/style.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
+export const Sender: FC<RouteComponentProps & any> = ({onAddSMS}): JSX.Element => {
   const classes = useStyles();
   const [state, setState] = useState({
     message: {
@@ -42,16 +46,15 @@ export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
   const onSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     setState((prevState) => ({ ...prevState, submitting: true }));
-    fetch("/api/messages", {
+    axios("/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(state.message),
+      data: JSON.stringify(state.message),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
+      .then((res) => {
+        if (res.data.success) {
           setState({
             error: "",
             submitting: false,
@@ -60,6 +63,7 @@ export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
               body: "",
             },
           });
+          onAddSMS(state.message)
         } else {
           setState((prevState) => ({
             ...prevState,
@@ -67,7 +71,14 @@ export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
             submitting: false,
           }));
         }
-      });
+      })
+      .catch(err => {
+        setState((prevState) => ({
+          ...prevState,
+          error: err,
+          submitting: false,
+        }));
+      })
   };
 
   const onHandleChangePhone = (value: string) => {
@@ -108,3 +119,15 @@ export const Sender: FC<RouteComponentProps> = (): JSX.Element => {
     </form>
   );
 };
+
+const mapDispatchToProps = (dispatch: (arg0: SMSAction) => any, data: ISMS) => {
+  return {
+    onAddSMS: () => dispatch(addSMS(data)),
+  };
+};
+
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Sender);

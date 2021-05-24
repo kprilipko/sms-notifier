@@ -13,6 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const PrimaryAppBar = () => {
+const PrimaryAppBar = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -228,3 +229,11 @@ export const PrimaryAppBar = () => {
     </div>
   );
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps, null)(PrimaryAppBar);

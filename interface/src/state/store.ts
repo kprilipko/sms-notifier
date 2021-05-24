@@ -1,10 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { createStore, applyMiddleware, Store } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from "./rootReducer";
 
-const store = configureStore({
-    reducer: {
-      sms: smsReducer
-    }
-  })
+const store: Store<SMSState, SMSAction> & {
+  dispatch: DispatchType;
+} = createStore(rootReducer, applyMiddleware(thunk));
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export default store
