@@ -10,11 +10,14 @@ import {
 
 import { RouteComponentProps } from "@reach/router";
 import PhoneInput from "react-phone-input-2";
-import { connect } from 'react-redux';
-import { addSMS } from '../../state/actionCreators'
-import axios from 'axios';
+import { connect } from "react-redux";
+import { addSMS } from "../../state/actionCreators";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 import "react-phone-input-2/lib/style.css";
+
+import { auth } from "../../global/firebaseSetup";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,7 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Sender: FC<RouteComponentProps & any> = ({onAddSMS}): JSX.Element => {
+export const Sender: FC<RouteComponentProps & any> = ({
+  onAddSMS,
+}): JSX.Element => {
+  let history = useHistory();
   const classes = useStyles();
   const [state, setState] = useState({
     message: {
@@ -63,7 +69,7 @@ export const Sender: FC<RouteComponentProps & any> = ({onAddSMS}): JSX.Element =
               body: "",
             },
           });
-          onAddSMS(state.message)
+          onAddSMS(state.message);
         } else {
           setState((prevState) => ({
             ...prevState,
@@ -72,13 +78,13 @@ export const Sender: FC<RouteComponentProps & any> = ({onAddSMS}): JSX.Element =
           }));
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setState((prevState) => ({
           ...prevState,
           error: err,
           submitting: false,
         }));
-      })
+      });
   };
 
   const onHandleChangePhone = (value: string) => {
@@ -98,6 +104,11 @@ export const Sender: FC<RouteComponentProps & any> = ({onAddSMS}): JSX.Element =
     }));
   };
 
+  const signOut = async () => {
+    await auth.signOut();
+    history.push("/signin");
+  };
+
   return (
     <form className={classes.root}>
       <FormControl>
@@ -115,6 +126,9 @@ export const Sender: FC<RouteComponentProps & any> = ({onAddSMS}): JSX.Element =
       <Button variant="contained" onClick={onSubmit} color="primary">
         Send
       </Button>
+      <Button variant="contained" onClick={signOut} color="secondary">
+        Exit
+      </Button>
       <FormHelperText error>{state.error}</FormHelperText>
     </form>
   );
@@ -126,8 +140,4 @@ const mapDispatchToProps = (dispatch: (arg0: SMSAction) => any, data: ISMS) => {
   };
 };
 
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Sender);
+export default connect(null, mapDispatchToProps)(Sender);

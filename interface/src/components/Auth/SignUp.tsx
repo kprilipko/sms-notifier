@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 import { auth } from "../../global/firebaseSetup";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const SignUp: FC<RouteComponentProps> = () => {
+  let history = useHistory();
   const classes = useStyles();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -40,6 +42,7 @@ export const SignUp: FC<RouteComponentProps> = () => {
         emailRef.current!.value,
         passwordRef.current!.value
       );
+      history.push("/sender");
     } catch (error) {
       if (error.code === "auth/invalid-email") {
         setErrors((prevState) => ({ ...prevState, email: error.message }));

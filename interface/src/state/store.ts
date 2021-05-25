@@ -6,4 +6,4 @@ const store: Store<SMSState, SMSAction> & {
   dispatch: DispatchType;
 } = createStore(rootReducer, applyMiddleware(thunk));
 
-export default store
+export default store;
